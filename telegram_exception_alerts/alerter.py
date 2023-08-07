@@ -119,8 +119,9 @@ class Alerter:
 
                 # Check if a blacklist does not exist or the error_type is in the blacklist, send the alert
                 if not self.blacklist or error_type in self.blacklist:
-                    text = f"<b>{type(e).__name__}('{e}')</b> in <u>{func.__name__}</u> from <u>{func.__module__}</u>\n\n<pre>{traceback.format_exc()}</pre>"
-                    self.send_message(self.chat_id, text=text, parse_mode="HTML")
+                    import html
+                    text = f"{type(e).__name__}('{e}')</b> in <u>{func.__name__} from {func.__module__}\n\n{traceback.format_exc()}"
+                    self.send_message(self.chat_id, text=html.escape(text), parse_mode="HTML")
 
                 raise
 
